@@ -1,4 +1,4 @@
-defmodule Charm do
+defmodule Mojo do
   alias Trie
 
   def build_dict(dict) do
