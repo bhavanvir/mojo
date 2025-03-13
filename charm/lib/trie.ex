@@ -35,5 +35,53 @@ defmodule Trie do
     end
   end
 
+  def matches(%Trie{root: root}, word) do
+    prefix = longest_prefix(root, String.graphemes(word), "")
+
+    case prefix do
+      "" ->
+        []
+
+      _ ->
+        case leaf_children(root, String.graphemes(prefix)) do
+          nil ->
+            []
+
+          node ->
+            collect_words(node, prefix)
+        end
+    end
+  end
+
+  defp longest_prefix(_node, [], prefix), do: prefix
+
+  defp longest_prefix(node, [char | rest], prefix) do
+    case Map.fetch(node.children, char) do
+      :error ->
+        prefix
+
+      {:ok, child} ->
+        longest_prefix(child, rest, prefix <> char)
+    end
+  end
+
+  defp leaf_children(node, []), do: node
+
+  defp leaf_children(node, [char | rest]) do
+    case Map.fetch(node.children, char) do
+      :error ->
+        nil
+
+      {:ok, child} ->
+        leaf_children(child, rest)
+    end
+  end
+
+  defp collect_words(node, prefix) do
+    words =
+      node.children
+      |> Enum.flat_map(fn {char, child} -> collect_words(child, prefix <> char) end)
+
+    if node.end_of_word?, do: [prefix | words], else: words
   end
 end
