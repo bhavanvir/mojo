@@ -1,15 +1,22 @@
 defmodule Charm do
   alias Trie
 
-  def hello do
+  def build_dict(dict) do
     trie = %Trie{}
-    dict = ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]
 
     trie =
       Enum.reduce(dict, trie, fn word, acc_trie ->
         Trie.insert(acc_trie, word)
       end)
 
-    IO.inspect(trie, pretty: true)
+    trie
+  end
+
+  def in_dict?(root, word) do
+    Trie.search(root, word)
+  end
+
+  def suggestions(root, word) do
+    Trie.matches(root, word)
   end
 end
