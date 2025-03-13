@@ -19,7 +19,7 @@ defmodule Trie do
     %{node | children: updated_children}
   end
 
-  def search(%Trie{root: root} = _trie, word) do
+  def search(%Trie{root: root}, word) do
     do_search(root, String.graphemes(word))
   end
 
