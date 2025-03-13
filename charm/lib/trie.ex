@@ -35,19 +35,5 @@ defmodule Trie do
     end
   end
 
-  def starts_with?(%Trie{root: root} = _trie, word) do
-    do_starts_with?(root, String.graphemes(word))
-  end
-
-  defp do_starts_with?(_node, []), do: true
-
-  defp do_starts_with?(node, [char | rest]) do
-    case Map.fetch(node.children, char) do
-      :error ->
-        false
-
-      {:ok, child} ->
-        do_starts_with?(child, rest)
-    end
   end
 end
