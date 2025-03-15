@@ -16,7 +16,7 @@ defmodule Mojo do
     Trie.search(root, word)
   end
 
-  def suggestions(root, word) do
+  def prefix_matches(root, word) do
     Trie.matches(root, word)
   end
 end

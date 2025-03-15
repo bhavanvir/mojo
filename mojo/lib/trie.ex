@@ -35,7 +35,7 @@ defmodule Trie do
     end
   end
 
-  def matches(%Trie{root: root}, word) do
+  def prefix_matches(%Trie{root: root}, word) do
     prefix = longest_prefix(root, String.graphemes(word), "")
 
     case prefix do
