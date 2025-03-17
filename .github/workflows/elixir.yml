@@ -16,6 +16,10 @@ jobs:
     env:
       ImageOS: ubuntu22
 
+    defaults:
+      run:
+        working-directory: ./mojo
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Elixir
