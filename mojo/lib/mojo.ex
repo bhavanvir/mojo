@@ -1,15 +1,16 @@
 defmodule Mojo do
   alias Trie
 
-  def build_dict(dict) do
-    trie = %Trie{}
+  def create_dict, do: %Trie{}
 
-    trie =
-      Enum.reduce(dict, trie, fn word, acc_trie ->
-        Trie.insert(acc_trie, word)
-      end)
+  def update_dict(root, input) when is_list(input) do
+    Enum.reduce(input, root, fn word, acc_trie ->
+      Trie.insert(acc_trie, word)
+    end)
+  end
 
-    trie
+  def update_dict(root, input) when is_binary(input) do
+    Trie.insert(root, input)
   end
 
   def in_dict?(root, word) do
