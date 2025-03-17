@@ -3,7 +3,10 @@ defmodule MojoTest do
   doctest Mojo
 
   setup _context do
-    root = Mojo.build_dict(["word"])
+    root =
+      Mojo.create_dict()
+      |> Mojo.update_dict("word")
+
     %{root: root}
   end
 
@@ -17,17 +20,17 @@ defmodule MojoTest do
                        "o" => %TrieNode{
                          children: %{
                            "r" => %TrieNode{
-                             children: %{"d" => %TrieNode{children: %{}, end_of_word?: true}},
-                             end_of_word?: false
+                             children: %{"d" => %TrieNode{children: %{}, is_terminal: true}},
+                             is_terminal: false
                            }
                          },
-                         end_of_word?: false
+                         is_terminal: false
                        }
                      },
-                     end_of_word?: false
+                     is_terminal: false
                    }
                  },
-                 end_of_word?: false
+                 is_terminal: false
                }
              }
   end
