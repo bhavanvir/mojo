@@ -1,5 +1,5 @@
 defmodule TrieNode do
-  defstruct children: %{}, end_of_word?: false
+  defstruct children: %{}, is_terminal: false
 end
 
 defmodule Trie do
@@ -10,7 +10,7 @@ defmodule Trie do
     %Trie{trie | root: new_root}
   end
 
-  defp _insert(node, []), do: %{node | end_of_word?: true}
+  defp _insert(node, []), do: %{node | is_terminal: true}
 
   defp _insert(node, [char | rest]) do
     child = Map.get(node.children, char, %TrieNode{})
@@ -23,7 +23,7 @@ defmodule Trie do
     _search(root, String.graphemes(word))
   end
 
-  defp _search(node, []), do: node.end_of_word?
+  defp _search(node, []), do: node.is_terminal
 
   defp _search(node, [char | rest]) do
     case Map.fetch(node.children, char) do
@@ -82,6 +82,6 @@ defmodule Trie do
       node.children
       |> Enum.flat_map(fn {char, child} -> collect_words(child, prefix <> char) end)
 
-    if node.end_of_word?, do: [prefix | words], else: words
+    if node.is_terminal, do: [prefix | words], else: words
   end
 end
