@@ -9,6 +9,7 @@ defmodule Mojo.MixProject do
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
+      deps: deps(),
       name: "Mojo",
       source_url: "https://github.com/bhavanvir/mojo"
     ]
@@ -16,6 +17,12 @@ defmodule Mojo.MixProject do
 
   def application do
     []
+  end
+
+  defp deps do
+    [
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false}
+    ]
   end
 
   defp description do
