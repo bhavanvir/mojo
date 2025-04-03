@@ -1,8 +1,93 @@
 defmodule Mojo do
+  @moduledoc """
+  Implements interface functions using the Trie module under-the-hood.
+  """
   alias Trie
 
+  @doc """
+  Creates an empty dictionary.
+
+  Returns a `%Trie{}`.
+
+  ## Examples
+
+    iex> root = Mojo.create_dict()
+    iex> root
+    %Trie{root: %TrieNode{children: %{}, is_terminal: false}}
+
+  """
   def create_dict, do: %Trie{}
 
+  @doc """
+  Updates a dictionary given a list of words, or a single word.
+
+  Returns an updated `%Trie{}`.
+
+  ## Examples
+
+    iex> root = Mojo.update_dict(root, ["word1", "word2"])
+    iex> root
+    %Trie{
+      root: %TrieNode{
+        children: %{
+          "w" => %TrieNode{
+            children: %{
+              "o" => %TrieNode{
+                children: %{
+                  "r" => %TrieNode{
+                    children: %{
+                      "d" => %TrieNode{
+                        children: %{
+                          "1" => %TrieNode{children: %{}, is_terminal: true},
+                          "2" => %TrieNode{children: %{}, is_terminal: true}
+                        },
+                        is_terminal: false
+                      }
+                    },
+                    is_terminal: false
+                  }
+                },
+                is_terminal: false
+              }
+            },
+            is_terminal: false
+          }
+        },
+        is_terminal: false
+      }
+    }
+
+    iex> root = Mojo.update_dict(root, "word3")
+    iex> root
+    %Trie{
+      root: %TrieNode{
+        children: %{
+          "w" => %TrieNode{
+            children: %{
+              "o" => %TrieNode{
+                children: %{
+                  "r" => %TrieNode{
+                    children: %{
+                      "d" => %TrieNode{
+                        children: %{
+                          "3" => %TrieNode{children: %{}, is_terminal: true}
+                        },
+                        is_terminal: false
+                      }
+                    },
+                    is_terminal: false
+                  }
+                },
+                is_terminal: false
+              }
+            },
+            is_terminal: false
+          }
+        },
+        is_terminal: false
+      }
+    }
+  """
   def update_dict(root, input) when is_list(input) do
     Enum.reduce(input, root, fn word, acc_trie ->
       Trie.insert(acc_trie, word)
@@ -13,14 +98,47 @@ defmodule Mojo do
     Trie.insert(root, input)
   end
 
+  @doc """
+  Checks if a word exists in a dictionary.
+
+  Returns an `Atom` representing `true`, or `false`.
+
+  ## Examples
+
+    iex> Mojo.in_dict?(root, "word3")
+    true 
+
+    iex> Mojo.in_dict?(root, "word4")
+    false
+  """
   def in_dict?(root, word) do
     Trie.search(root, word)
   end
 
+  @doc """
+  Returns all words that match a given prefix.
+
+  Returns a `List`.
+
+  ## Examples
+    
+    iex> Mojo.prefix_matches(root, "word")
+    ["word1", "word2", "word3"]
+  """
   def prefix_matches(root, prefix) do
     Trie.prefix_matches(root, prefix)
   end
 
+  @doc """
+  Maps any error in a passage with their closest matches in the dictionary.
+
+  Returns a `%{}`.
+
+  ## Examples
+
+    iex> Mojo.parse(root, ["werd"])
+    %{"werd" => ["word1", "word2", "word3"]
+  """
   def parse(root, passage) do
     Enum.reduce(passage, %{}, fn word, errors ->
       case Mojo.in_dict?(root, word) do
