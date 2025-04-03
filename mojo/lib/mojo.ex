@@ -24,9 +24,9 @@ defmodule Mojo do
 
   ## Examples
 
-    iex> dict1 = Mojo.create_dict()
-    iex> updated_dict1 = Mojo.update_dict(dict1, ["word1", "word2"])
-    iex> updated_dict1
+    iex> dict = Mojo.create_dict()
+    iex> updated_dict = Mojo.update_dict(dict, ["word1", "word2"])
+    iex> updated_dict
     %Trie{
       root: %TrieNode{
         children: %{
@@ -57,9 +57,9 @@ defmodule Mojo do
       }
     }
 
-    iex> dict2 = Mojo.create_dict()
-    iex> updated_dict2 = Mojo.update_dict(dict2, "word3")
-    iex> updated_dict2
+    iex> dict = Mojo.create_dict()
+    iex> updated_dict = Mojo.update_dict(dict, "word3")
+    iex> updated_dict
     %Trie{
       root: %TrieNode{
         children: %{
@@ -106,11 +106,11 @@ defmodule Mojo do
 
   ## Examples
 
-    iex> dict3 = Mojo.create_dict()
-    iex> dict3 = Mojo.update_dict(dict3, "word3")
-    iex> Mojo.in_dict?(dict3, "word3")
+    iex> dict = Mojo.create_dict()
+    iex> dict = Mojo.update_dict(dict, "word3")
+    iex> Mojo.in_dict?(dict, "word3")
     true 
-    iex> Mojo.in_dict?(dict3, "word4")
+    iex> Mojo.in_dict?(dict, "word4")
     false
   """
   def in_dict?(root, word) do
@@ -124,9 +124,9 @@ defmodule Mojo do
 
   ## Examples
     
-    iex> dict4 = Mojo.create_dict()
-    iex> dict4 = Mojo.update_dict(dict4, ["word1", "word2", "word3"])
-    iex> Mojo.prefix_matches(dict4, "word")
+    iex> dict = Mojo.create_dict()
+    iex> dict = Mojo.update_dict(dict, ["word1", "word2", "word3"])
+    iex> Mojo.prefix_matches(dict, "word")
     ["word1", "word2", "word3"]
   """
   def prefix_matches(root, prefix) do
@@ -140,9 +140,9 @@ defmodule Mojo do
 
   ## Examples
 
-    iex> dict5 = Mojo.create_dict()
-    iex> dict5 = Mojo.update_dict(dict5, ["word1", "word2", "word3"])
-    iex> Mojo.parse(dict5, ["werd"])
+    iex> dict = Mojo.create_dict()
+    iex> dict = Mojo.update_dict(dict, ["word1", "word2", "word3"])
+    iex> Mojo.parse(dict, ["werd"])
     %{"werd" => ["word1", "word2", "word3"]}
   """
   def parse(root, passage) do
