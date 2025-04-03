@@ -17,8 +17,8 @@ defmodule Mojo do
     Trie.search(root, word)
   end
 
-  def prefix_matches(root, word) do
-    Trie.prefix_matches(root, word)
+  def prefix_matches(root, prefix) do
+    Trie.prefix_matches(root, prefix)
   end
 
   def parse(root, passage) do
